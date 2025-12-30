@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Disallow admin or internal paths (if any in future)
+# Disallow: /admin
+# Disallow: /api
+
+# Sitemap
+Sitemap: https://carer.edu.pk/sitemap.xml

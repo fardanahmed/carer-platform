@@ -77,6 +77,16 @@ export default function RootLayout({
           Currently suppresses warnings from browser extensions adding attributes like data-jetski-tab-id.
           May need to be removed or refined for production SSR implementation. */}
       <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+            />
+          </>
+        )}
+      </head>
       <body
         className={`${inter.className} antialiased bg-background text-foreground`}
       >
@@ -92,6 +102,18 @@ export default function RootLayout({
             <Footer />
           </div>
         </ThemeProvider>
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
+              `,
+            }}
+          />
+        )}
       </body>
     </html>
     </>

@@ -57,20 +57,20 @@ const Hero = async () => {
             <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
               <Button
                 size="lg"
-                className="group relative overflow-hidden bg-white px-8 py-6 text-lg font-bold text-slate-950 shadow-xl transition-all hover:scale-105 hover:shadow-white/25"
+                className="group relative overflow-hidden bg-white px-8 py-6 text-lg font-bold text-slate-950 shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-white/50"
                 asChild
               >
                 <Link href="/research" className="flex items-center gap-2">
                   <span className="relative z-10">{heroContent.ctaPrimary}</span>
-                  <ArrowRight className="relative z-10 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  <div className="absolute inset-0 -z-0 bg-gradient-to-r from-blue-100 to-white opacity-0 transition-opacity group-hover:opacity-100" />
+                  <ArrowRight className="relative z-10 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  <div className="absolute inset-0 -z-0 bg-gradient-to-r from-blue-100 to-white opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 </Link>
               </Button>
               
               <Button
                 size="lg"
                 variant="outline"
-                className="border-2 border-white/30 bg-white/5 px-8 py-6 text-lg font-bold text-white backdrop-blur-sm transition-all hover:bg-white/20 hover:border-white/50"
+                className="border-2 border-white/30 bg-white/5 px-8 py-6 text-lg font-bold text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:border-white/50 hover:shadow-lg"
                 asChild
               >
                 <Link href="/about">{heroContent.ctaSecondary}</Link>
