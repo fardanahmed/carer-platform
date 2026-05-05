@@ -6,7 +6,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://carer.edu.pk'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://carer-platform.vercel.app'),
   title: {
     default:
       'CARER | Nasir Uddin Centre for Applied Research & Educational Resources',
