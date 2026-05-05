@@ -82,3 +82,9 @@ logs
 # Development artifacts
 .agent/
 *.local.md
+
+# Local development scripts
+cmd_init.bat
+powershell_init.ps1
+consultancy_context.md
+
