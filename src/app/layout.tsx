@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://carer.edu.pk',
+    url: 'https://carer-platform.vercel.app',
     siteName: 'CARER',
     title: 'CARER | Bridging Academia & Industry',
     description:
