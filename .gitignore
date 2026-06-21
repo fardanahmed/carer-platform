@@ -17,6 +17,11 @@
 /.next/
 /out/
 
+# astro & vercel
+.astro/
+dist/
+.vercel/
+
 # production
 /build
 /dist

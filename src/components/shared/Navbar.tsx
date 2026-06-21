@@ -1,15 +1,21 @@
-'use client';
-
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import { ModeToggle } from '@/components/mode-toggle';
 
-const Navbar = () => {
+interface NavbarProps {
+  pathname?: string;
+}
+
+const Navbar = ({ pathname: propPathname }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname();
+  const [pathname, setPathname] = useState(propPathname || '');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setPathname(window.location.pathname);
+    }
+  }, []);
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -20,17 +26,17 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 z-50 w-full border-b border-border/40 bg-background backdrop-blur-sm">
+    <nav className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
       <div className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
+        <a href="/" className="flex items-center gap-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-xl">
             C
           </div>
           <span className="text-xl font-bold text-foreground tracking-tight">
             CARER
           </span>
-        </Link>
+        </a>
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-2 lg:flex">
@@ -47,7 +53,7 @@ const Navbar = () => {
                     : 'text-muted-foreground hover:text-foreground hover:bg-accent'
                 }`}
               >
-                <Link href={link.href}>{link.label}</Link>
+                <a href={link.href}>{link.label}</a>
               </Button>
             );
           })}
@@ -86,7 +92,7 @@ const Navbar = () => {
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
-                <Link
+                <a
                   key={link.href}
                   href={link.href}
                   className={`text-lg font-medium transition-colors ${
@@ -97,7 +103,7 @@ const Navbar = () => {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.label}
-                </Link>
+                </a>
               );
             })}
             <Button

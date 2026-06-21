@@ -1,24 +1,36 @@
-import Link from 'next/link';
 import { Mail, Phone, MapPin } from 'lucide-react';
-import { getSiteSettings } from '@/lib/db-utils';
 import type { SiteData } from '@/types';
 
-export default async function Footer() {
-  const currentYear = new Date().getFullYear();
-  const siteData = await getSiteSettings<SiteData>('site_data');
+interface FooterProps {
+  siteData?: SiteData | null;
+}
 
-  if (!siteData) return null;
+export default function Footer({ siteData }: FooterProps) {
+  const currentYear = new Date().getFullYear();
+
+  const fallbackSiteData: SiteData = {
+    name: 'Nasir Uddin Centre for Applied Research & Educational Resources',
+    abbreviation: 'CARER',
+    tagline: 'Bridging Academia & Industry',
+    contact: {
+      email: 'contact@carer.edu.pk',
+      phone: '+92-21-111-222-333',
+      address: 'Karachi, Pakistan',
+    },
+  };
+
+  const data = siteData || fallbackSiteData;
 
   return (
-    <footer className="border-t border-border bg-background text-muted-foreground">
+    <footer className="border-t border-border bg-card text-muted-foreground">
       <div className="container mx-auto max-w-7xl px-6 py-12">
         <div className="grid gap-8 md:grid-cols-3 lg:gap-12">
           {/* Left: Logo and Tagline */}
           <div>
             <h3 className="mb-2 text-2xl font-bold text-foreground">
-              {siteData.abbreviation}
+              {data.abbreviation}
             </h3>
-            <p className="text-sm text-muted-foreground">{siteData.tagline}</p>
+            <p className="text-sm text-muted-foreground">{data.tagline}</p>
           </div>
 
           {/* Middle: Navigation Links */}
@@ -28,28 +40,28 @@ export default async function Footer() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link
+                <a
                   href="/research"
                   className="transition-colors hover:text-primary"
                 >
                   Research
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
+                <a
                   href="/resources"
                   className="transition-colors hover:text-primary"
                 >
                   Resources
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
+                <a
                   href="/contact"
                   className="transition-colors hover:text-primary"
                 >
                   Contact
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
@@ -62,19 +74,19 @@ export default async function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0" />
-                <span>{siteData.contact.phone}</span>
+                <span>{data.contact.phone}</span>
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
-                <span>{siteData.contact.address}</span>
+                <span>{data.contact.address}</span>
               </li>
               <li className="flex items-start gap-2">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0" />
                 <a
-                  href={`mailto:${siteData.contact.email}`}
+                  href={`mailto:${data.contact.email}`}
                   className="transition-colors hover:text-primary"
                 >
-                  {siteData.contact.email}
+                  {data.contact.email}
                 </a>
               </li>
             </ul>
@@ -84,21 +96,21 @@ export default async function Footer() {
         {/* Bottom: Copyright and Legal Links */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 text-sm md:flex-row">
           <p className="text-muted-foreground">
-            © {currentYear} {siteData.name}. All rights reserved.
+            © {currentYear} {data.name}. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <Link
+            <a
               href="/privacy"
               className="transition-colors hover:text-primary"
             >
               Privacy Policy
-            </Link>
-            <Link
+            </a>
+            <a
               href="/terms"
               className="transition-colors hover:text-primary"
             >
               Terms of Service
-            </Link>
+            </a>
           </div>
         </div>
       </div>

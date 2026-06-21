@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/home/Hero.astro';
+import ResearchGrid from '../components/home/ResearchGrid';
+import GoalsSection from '../components/home/GoalsSection.astro';
+import JoinTeamSection from '../components/home/JoinTeamSection';
+
+import { getResearchAreas } from '../lib/db-utils';
+
+// Fetch data from Neon DB
+const areas = await getResearchAreas();
+---
+
+<Layout>
+  <!-- Static Hero Component (zero client JS) -->
+  <Hero />
+  
+  <!-- Interactive Research Grid hydrated only when visible in viewport -->
+  <ResearchGrid client:visible areas={areas} />
+  
+  <!-- Static Goals Section (zero client JS) -->
+  <GoalsSection />
+  
+  <!-- Interactive signup form hydrated on visibility -->
+  <JoinTeamSection client:visible />
+</Layout>

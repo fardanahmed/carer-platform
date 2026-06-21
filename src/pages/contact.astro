@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/contact/ContactForm';
+import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import { getSiteSettings } from '../lib/db-utils';
+import type { SiteData } from '../types';
+
+const siteData = await getSiteSettings<SiteData>('site_data');
+if (!siteData) {
+  return new Response("Configuration data missing", { status: 500 });
+}
+---
+
+<Layout title="Contact Us">
+  <!-- Hero Header -->
+  <section class="border-b border-border/50 py-20 sm:py-24 lg:py-28 bg-gradient-to-b from-slate-950/20 to-transparent">
+    <div class="container mx-auto max-w-7xl px-6">
+      <div class="max-w-3xl">
+        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">Get In Touch</p>
+        <h1 class="mb-6 font-heading text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+          Let's Start a <span class="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">Conversation</span>
+        </h1>
+        <p class="text-xl leading-relaxed text-muted-foreground font-light">
+          Whether you want to discuss joint ventures, student opportunities, or need detailed research resources, we are ready to assist.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Split Contact Section -->
+  <section class="py-20 relative">
+    <div class="absolute top-1/4 right-0 h-96 w-96 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
+    <div class="absolute bottom-10 left-10 h-80 w-80 rounded-full bg-blue-500/5 blur-3xl pointer-events-none" />
+    
+    <div class="container mx-auto max-w-7xl px-6 relative z-10">
+      <div class="grid gap-12 lg:grid-cols-2 lg:gap-16 items-start">
+        
+        <!-- Info Column -->
+        <div class="space-y-12">
+          <div>
+            <h2 class="text-2xl font-bold tracking-tight text-foreground mb-6 font-heading">
+              Contact Information
+            </h2>
+            <div class="grid gap-6">
+              
+              <!-- Address -->
+              <div class="group flex items-start gap-4 rounded-xl border border-border bg-card/40 p-5 hover:border-primary/30 transition-colors">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                  <MapPin class="h-5 w-5" />
+                </div>
+                <div class="space-y-1">
+                  <p class="font-semibold text-foreground text-sm uppercase tracking-wider">Office Address</p>
+                  <p class="text-muted-foreground text-base leading-relaxed">{siteData.contact.address}</p>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="group flex items-start gap-4 rounded-xl border border-border bg-card/40 p-5 hover:border-primary/30 transition-colors">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                  <Mail class="h-5 w-5" />
+                </div>
+                <div class="space-y-1">
+                  <p class="font-semibold text-foreground text-sm uppercase tracking-wider">Email Directory</p>
+                  <a href={`mailto:${siteData.contact.email}`} class="text-muted-foreground text-base hover:text-primary transition-colors block">
+                    {siteData.contact.email}
+                  </a>
+                </div>
+              </div>
+
+              <!-- Phone -->
+              <div class="group flex items-start gap-4 rounded-xl border border-border bg-card/40 p-5 hover:border-primary/30 transition-colors">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                  <Phone class="h-5 w-5" />
+                </div>
+                <div class="space-y-1">
+                  <p class="font-semibold text-foreground text-sm uppercase tracking-wider">Direct Lines</p>
+                  <p class="text-muted-foreground text-base">{siteData.contact.phone}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Office Hours -->
+          <div class="rounded-2xl border border-border bg-card/30 p-6 space-y-4">
+            <h3 class="text-lg font-bold text-foreground flex items-center gap-2">
+              <Clock class="h-5 w-5 text-primary" />
+              Office Hours
+            </h3>
+            <div class="grid grid-cols-2 gap-4 text-base text-muted-foreground">
+              <div>Monday &ndash; Friday</div>
+              <div class="text-foreground font-semibold">9:00 AM &ndash; 6:00 PM</div>
+              <div>Saturday</div>
+              <div class="text-foreground font-semibold">10:00 AM &ndash; 2:00 PM</div>
+              <div>Sunday</div>
+              <div class="text-red-500 font-semibold">Closed</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Column -->
+        <!-- client:load is critical for mounting client form submit interactions -->
+        <ContactForm client:load />
+
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,116 @@
+---
+import Image from 'astro:assets'; // Astro optimized image component (or standard img if external R2)
+import Layout from '../layouts/Layout.astro';
+import { Target, Lightbulb, Scale } from 'lucide-react';
+import { getSiteSettings } from '../lib/db-utils';
+import { getImageUrl, images } from '../lib/images';
+import type { AboutContent } from '../types';
+
+const aboutContent = await getSiteSettings<AboutContent>('about_content');
+
+if (!aboutContent) {
+  return new Response("Loading content failed...", { status: 500 });
+}
+
+const historyImgUrl = getImageUrl(images.leadership);
+
+const values = [
+  { title: 'Integrity', icon: Scale, desc: 'We adhere to the highest ethical standards in all our research and operations.' },
+  { title: 'Innovation', icon: Lightbulb, desc: 'We constantly push boundaries to find novel solutions to complex global problems.' },
+  { title: 'Impact', icon: Target, desc: 'We focus on tangible outcomes that make a measurable difference in society.' },
+];
+---
+
+<Layout title="About Our Mission">
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden border-b border-border/50 py-24 md:py-32 bg-gradient-to-b from-slate-950/20 to-transparent">
+    <!-- Geometric backdrop shape -->
+    <div class="absolute inset-0 opacity-5 pointer-events-none select-none">
+      <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M0 100 C 20 0 50 0 100 100 Z" fill="currentColor" class="text-primary"></path>
+      </svg>
+    </div>
+    
+    <div class="container mx-auto max-w-7xl px-6 relative z-10">
+      <div class="max-w-4xl">
+        <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary">
+          Who We Are
+        </div>
+        <h1 class="mb-8 font-heading text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+          Pioneering the future of <span class="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">sustainable development</span>
+        </h1>
+        <p class="text-xl leading-relaxed text-muted-foreground sm:text-2xl font-light">
+          {aboutContent.mission}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Grid -->
+  <section class="py-24">
+    <div class="container mx-auto max-w-7xl px-6">
+      <div class="grid gap-8 md:grid-cols-3">
+        {values.map((val) => {
+          const Icon = val.icon;
+          return (
+            <div class="group relative overflow-hidden rounded-2xl border border-border bg-card/50 p-8 transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
+              <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
+                <Icon class="h-7 w-7" />
+              </div>
+              <h3 class="mb-4 font-heading text-2xl font-bold text-foreground">{val.title}</h3>
+              <p class="text-muted-foreground leading-relaxed text-base md:text-lg">{val.desc}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Story Section -->
+  <section class="border-y border-border/50 bg-muted/20 py-24">
+    <div class="container mx-auto max-w-7xl px-6">
+      <div class="grid gap-16 lg:grid-cols-2 lg:items-center">
+        <!-- Story Text -->
+        <div class="space-y-6">
+          <p class="text-sm font-semibold uppercase tracking-widest text-primary">Our Story</p>
+          <h2 class="font-heading text-3xl font-extrabold tracking-tight sm:text-4xl text-foreground">The Journey of CARER</h2>
+          
+          <div class="prose prose-lg dark:prose-invert text-muted-foreground space-y-6 text-lg leading-relaxed">
+            {aboutContent.preamble
+              .replace(/\\n\\n/g, '\n\n')
+              .replace(/\\n/g, ' ')
+              .split('\n\n')
+              .filter((p) => p.trim())
+              .map((paragraph) => (
+                <p>{paragraph.trim()}</p>
+              ))}
+          </div>
+        </div>
+        
+        <!-- Story Image Container -->
+        <div class="relative">
+          <div class="absolute -inset-1 bg-gradient-to-r from-primary to-blue-500 rounded-2xl blur opacity-15" />
+          <div class="relative aspect-[4/3] md:aspect-[16/10] lg:aspect-auto lg:h-[550px] overflow-hidden rounded-2xl border border-border/50 shadow-2xl">
+            <img 
+              src={historyImgUrl} 
+              alt="CARER History & Leadership" 
+              class="h-full w-full object-cover transition-transform duration-[8000ms] hover:scale-105" 
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision Section -->
+  <section class="py-24 relative overflow-hidden bg-gradient-to-t from-slate-950/20 to-transparent">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-80 w-80 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
+    
+    <div class="container mx-auto max-w-7xl px-6 text-center relative z-10">
+      <p class="mb-6 text-sm font-semibold uppercase tracking-widest text-primary">Our Vision</p>
+      <blockquote class="mx-auto max-w-4xl font-heading text-2xl font-semibold italic leading-relaxed text-foreground md:text-3xl lg:text-4xl">
+        &ldquo;{aboutContent.vision}&rdquo;
+      </blockquote>
+    </div>
+  </section>
+</Layout>

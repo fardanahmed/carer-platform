@@ -1,0 +1,66 @@
+---
+import { CheckCircle2 } from 'lucide-react';
+
+const goals = [
+  {
+    title: 'Academic Excellence',
+    description: 'Promote academic excellence through mentorship and advanced training programs.',
+  },
+  {
+    title: 'Academia-Industry Synergy',
+    description: 'Bridge the gap between academia and industry to create commercially viable, real-world solutions.',
+  },
+  {
+    title: 'Collaborative Research',
+    description: 'Foster collaborative research initiatives at both national and international levels.',
+  },
+];
+---
+
+<section class="bg-background border-y border-border/50 py-20 md:py-28 relative overflow-hidden">
+  <!-- Subtle background glow -->
+  <div class="absolute -left-48 top-1/4 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
+  
+  <div class="container mx-auto max-w-7xl px-6 relative z-10">
+    <div class="grid gap-12 lg:grid-cols-[1fr_2fr] items-center">
+      
+      <!-- Left Column: Title and context -->
+      <div class="space-y-6">
+        <div class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary">
+          Core Mission
+        </div>
+        <h2 class="font-heading text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+          CARER's <span class="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">Strategic Goals</span>
+        </h2>
+        <p class="text-muted-foreground text-lg leading-relaxed">
+          Through innovation, integrity, and relentless application, we align academic talent with industry challenges to pioneer sustainable technology.
+        </p>
+      </div>
+
+      <!-- Right Column: Goals Cards (Uplifted with glassmorphic cards and hover borders) -->
+      <div class="grid gap-6">
+        {goals.map((goal, idx) => (
+          <div class="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 md:p-8 transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
+            <!-- Left accent border on hover -->
+            <div class="absolute left-0 top-0 h-full w-1.5 bg-primary scale-y-0 transition-transform duration-300 group-hover:scale-y-100" />
+            
+            <div class="flex items-start gap-5">
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                <CheckCircle2 class="h-6 w-6" />
+              </div>
+              <div class="space-y-2">
+                <h3 class="font-heading text-xl font-bold text-foreground">
+                  {goal.title}
+                </h3>
+                <p class="text-muted-foreground leading-relaxed text-base md:text-lg">
+                  {goal.description}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>
