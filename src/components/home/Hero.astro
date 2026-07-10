@@ -62,6 +62,12 @@ const headlinePart2 = headlineWords.slice(-2).join(' ');
             </span>
           )}
         </h1>
+        
+        {subheadline && (
+          <p class="mt-6 max-w-2xl text-xl sm:text-2xl leading-relaxed text-slate-300 font-light">
+            {subheadline}
+          </p>
+        )}
       </div>
 
       <!-- Bottom Right: Glass Card with CTAs -->
@@ -70,11 +76,9 @@ const headlinePart2 = headlineWords.slice(-2).join(' ');
         <div class="absolute -inset-2 bg-gradient-to-br from-cyan-500/20 via-transparent to-purple-500/10 opacity-50 blur-2xl z-0 pointer-events-none"></div>
         
         <div class="relative z-10">
-          {subheadline && (
-            <p class="mb-10 text-lg leading-relaxed text-slate-300 font-medium">
-              {subheadline}
-            </p>
-          )}
+          <p class="mb-10 text-lg leading-relaxed text-slate-300 font-medium">
+            Explore our comprehensive research initiatives and meet the visionary minds driving innovation across industries.
+          </p>
 
           {(ctaPrimary || ctaSecondary) && (
             <div class="flex flex-col gap-4 sm:flex-row sm:gap-4">
