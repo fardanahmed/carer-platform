@@ -1,9 +1,8 @@
 ---
 import { ArrowRight } from 'lucide-react';
 import { getSiteSettings } from '../../lib/content-api';
-import { getImageUrl, images } from '../../lib/images';
 import type { HeroContent, SiteData } from '../../types';
-import ParticlesBackground from './ParticlesBackground';
+import Interactive3DBackground from './Interactive3DBackground';
 
 const heroContent = await getSiteSettings<HeroContent>('hero_content');
 const siteData = await getSiteSettings<SiteData>('site_data');
@@ -23,81 +22,77 @@ const ctaSecondary = heroContent?.ctaSecondary || defaultHeroContent.ctaSecondar
 const headlineWords = typeof headline === 'string' && headline.trim() ? headline.trim().split(/\s+/) : [];
 const headlinePart1 = headlineWords.slice(0, -2).join(' ');
 const headlinePart2 = headlineWords.slice(-2).join(' ');
-
-const bgUrl = getImageUrl(images.heroBackground);
 ---
 
 <section class="relative w-full bg-background overflow-hidden">
   <!-- Dynamic, modern background layer -->
   <div class="relative flex min-h-[90vh] sm:min-h-[600px] w-full overflow-hidden bg-slate-950 dark:bg-slate-950">
     <div class="absolute inset-0 z-0">
-      <ParticlesBackground client:load />
-      <img
-        src={bgUrl}
-        alt="CARER Applied Research"
-        class="h-full w-full object-cover transition-transform duration-[10000ms] ease-out hover:scale-105"
-        loading="eager"
-      />
+      <Interactive3DBackground client:load />
+      
       <!-- Theme-aware overlay: dark slate in dark mode, soft blue-grey in light mode -->
-      <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-slate-950/30 dark:from-slate-950 dark:via-slate-950/80 dark:to-slate-950/30 z-10" />
+      <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/70 to-slate-950/20 dark:from-slate-950/90 dark:via-slate-950/70 dark:to-slate-950/20 z-10 pointer-events-none" />
       
       <!-- Subtle primary tint glow -->
-      <div class="absolute inset-0 bg-gradient-to-tr from-primary/25 via-transparent to-transparent z-10 mix-blend-overlay" />
+      <div class="absolute inset-0 bg-gradient-to-tr from-primary/30 via-transparent to-transparent z-10 mix-blend-overlay pointer-events-none" />
       
-      <!-- Smooth fade to page background at the very bottom — adapts to both themes -->
-      <div class="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-background via-background/90 to-transparent z-10" />
+      <!-- Smooth fade to page background at the very bottom -->
+      <div class="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent z-10 pointer-events-none" />
     </div>
 
     <!-- Content Container -->
-    <div class="container relative z-20 mx-auto flex w-full max-w-7xl flex-col justify-center lg:items-end px-6 py-20">
-      <div class="max-w-2xl shrink-0 pt-12 md:pt-20 p-8 md:p-12 rounded-3xl bg-slate-900/40 backdrop-blur-2xl border border-white/10 shadow-[0_0_40px_rgba(0,240,255,0.15)] relative overflow-hidden">
-        <!-- Subtle inner glow for glass effect -->
-        <div class="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 to-transparent z-0"></div>
+    <div class="container relative z-20 mx-auto w-full max-w-7xl px-6 py-24 sm:py-32 pointer-events-none min-h-[90vh] flex flex-col justify-between">
+      
+      <!-- Top Left: Massive Headline -->
+      <div class="w-full max-w-4xl self-start pointer-events-auto mt-4 lg:mt-12">
+        <!-- Tagline Badge -->
+        <div class="mb-8 inline-flex items-center gap-3 rounded-full border border-cyan-400/20 bg-cyan-900/20 px-5 py-2 text-xs uppercase tracking-wider font-bold text-cyan-300 backdrop-blur-md shadow-lg shadow-cyan-500/10 transition-transform duration-300 hover:scale-105">
+          <span class="relative flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-cyan-500 shadow-[0_0_8px_#06b6d4]"></span>
+          </span>
+          {siteData?.tagline || 'Integrity. Innovation. Impact.'}
+        </div>
+
+        <!-- Headline -->
+        <h1 class="font-heading text-5xl font-black leading-[1.1] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-slate-400 md:text-7xl lg:text-[5.5rem] drop-shadow-xl">
+          {headlinePart1}
+          {headlinePart2 && (
+            <span class="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent block mt-2 pb-2">
+              {headlinePart2}
+            </span>
+          )}
+        </h1>
+      </div>
+
+      <!-- Bottom Right: Glass Card with CTAs -->
+      <div class="w-full max-w-[34rem] self-end mt-12 mb-8 p-8 md:p-12 rounded-[2.5rem] bg-slate-900/50 backdrop-blur-3xl border border-white/10 shadow-[0_30px_100px_rgba(0,0,0,0.4)] ring-1 ring-inset ring-white/10 relative overflow-hidden pointer-events-auto transition-transform duration-500 hover:-translate-y-1">
+        <!-- Inner ambient glow -->
+        <div class="absolute -inset-2 bg-gradient-to-br from-cyan-500/20 via-transparent to-purple-500/10 opacity-50 blur-2xl z-0 pointer-events-none"></div>
         
         <div class="relative z-10">
-          <!-- Tagline Badge with subtle pulse and slide-in animation -->
-          <div class="mb-8 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-5 py-2 text-sm font-semibold text-cyan-50 backdrop-blur-md animate-fade-in">
-            <span class="relative flex h-2.5 w-2.5">
-              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75"></span>
-              <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-cyan-500"></span>
-            </span>
-            {siteData?.tagline || 'Integrity. Innovation. Impact.'}
-          </div>
-
-          <!-- Headline: high contrast, modern layout -->
-          <h1 class="mb-6 font-heading text-4xl font-extrabold leading-[1.15] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
-            {headlinePart1}
-            {headlinePart2 && (
-              <span class="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent block sm:inline">
-                {headlinePart1 ? ' ' : ''}{headlinePart2}
-              </span>
-            )}
-          </h1>
-
-          <!-- Subheadline: elegant, readable text -->
           {subheadline && (
-            <p class="mb-10 max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl">
+            <p class="mb-10 text-lg leading-relaxed text-slate-300 font-medium">
               {subheadline}
             </p>
           )}
 
-          <!-- CTAs: Premium hover interactions -->
           {(ctaPrimary || ctaSecondary) && (
-            <div class="flex flex-col gap-4 sm:flex-row sm:gap-6">
+            <div class="flex flex-col gap-4 sm:flex-row sm:gap-4">
               {ctaPrimary && (
                 <a
                   href="/team"
-                  class="group inline-flex items-center justify-center gap-2 rounded-full bg-cyan-600 px-8 py-4 text-lg font-bold text-white shadow-[0_0_20px_rgba(8,145,178,0.4)] transition-all duration-300 hover:scale-105 hover:bg-cyan-500 hover:shadow-[0_0_30px_rgba(8,145,178,0.6)]"
+                  class="group flex-1 inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 text-base font-bold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:shadow-cyan-500/40 hover:brightness-110 border border-cyan-400/20"
                 >
                   <span>{ctaPrimary}</span>
-                  <ArrowRight class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1.5" />
                 </a>
               )}
 
               {ctaSecondary && (
                 <a
                   href="/about"
-                  class="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(0,240,255,0.2)]"
+                  class="flex-1 inline-flex items-center justify-center rounded-2xl border border-white/20 bg-white/5 px-6 py-4 text-base font-bold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:border-white/40"
                 >
                   {ctaSecondary}
                 </a>
@@ -106,6 +101,7 @@ const bgUrl = getImageUrl(images.heroBackground);
           )}
         </div>
       </div>
+      
     </div>
   </div>
 </section>

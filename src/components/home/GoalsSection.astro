@@ -17,42 +17,45 @@ const goals = [
 ];
 ---
 
-<section class="bg-background border-y border-border/50 py-20 md:py-28 relative overflow-hidden">
+<section class="bg-slate-950 border-y border-white/5 py-24 md:py-32 relative overflow-hidden">
   <!-- Subtle background glow -->
-  <div class="absolute -left-48 top-1/4 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
+  <div class="absolute -left-48 top-1/4 h-[500px] w-[500px] rounded-full bg-cyan-500/10 blur-[150px] pointer-events-none" />
+  <div class="absolute right-0 bottom-1/4 h-[400px] w-[400px] rounded-full bg-purple-600/10 blur-[120px] pointer-events-none" />
   
   <div class="container mx-auto max-w-7xl px-6 relative z-10">
-    <div class="grid gap-12 lg:grid-cols-[1fr_2fr] items-center">
+    <div class="grid gap-16 lg:grid-cols-[1fr_2fr] items-center">
       
       <!-- Left Column: Title and context -->
-      <div class="space-y-6">
-        <div class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary">
+      <div class="space-y-8">
+        <div class="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-900/20 px-5 py-2 text-xs font-bold text-cyan-300 shadow-[0_0_20px_rgba(8,145,178,0.15)] uppercase tracking-widest backdrop-blur-md">
           Core Mission
         </div>
-        <h2 class="font-heading text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-          CARER's <span class="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">Strategic Goals</span>
+        <h2 class="font-heading text-4xl font-black tracking-tighter text-white sm:text-5xl lg:text-6xl drop-shadow-xl">
+          CARER's <span class="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent block mt-2 pb-1">Strategic Goals</span>
         </h2>
-        <p class="text-muted-foreground text-lg leading-relaxed">
+        <p class="text-slate-300 text-lg leading-relaxed font-light">
           Through innovation, integrity, and relentless application, we align academic talent with industry challenges to pioneer sustainable technology.
         </p>
       </div>
 
       <!-- Right Column: Goals Cards (Uplifted with glassmorphic cards and hover borders) -->
       <div class="grid gap-6">
-        {goals.map((goal) => (
-          <div class="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 md:p-8 transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
+        {goals.map((goal, i) => (
+          <div class="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900/40 backdrop-blur-3xl p-8 md:p-10 transition-all duration-500 hover:-translate-y-2 hover:border-cyan-500/30 hover:shadow-[0_20px_60px_rgba(8,145,178,0.15)] ring-1 ring-inset ring-white/5 hover:ring-cyan-500/20">
             <!-- Left accent border on hover -->
-            <div class="absolute left-0 top-0 h-full w-1.5 bg-primary scale-y-0 transition-transform duration-300 group-hover:scale-y-100" />
+            <div class="absolute left-0 top-0 h-full w-1.5 bg-gradient-to-b from-cyan-400 to-purple-500 scale-y-0 transition-transform duration-500 group-hover:scale-y-100 origin-top" />
             
-            <div class="flex items-start gap-5">
-              <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                <CheckCircle2 class="h-6 w-6" />
+            <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+            <div class="flex flex-col sm:flex-row items-start gap-6 relative z-10">
+              <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-slate-800/80 border border-white/10 text-cyan-400 shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-all duration-500 group-hover:bg-cyan-500/20 group-hover:border-cyan-400/40 group-hover:text-cyan-300 group-hover:scale-110 group-hover:rotate-3">
+                <CheckCircle2 class="h-8 w-8 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
               </div>
-              <div class="space-y-2">
-                <h3 class="font-heading text-xl font-bold text-foreground">
+              <div class="space-y-3">
+                <h3 class="font-heading text-2xl font-bold text-white group-hover:text-cyan-300 transition-colors duration-300">
                   {goal.title}
                 </h3>
-                <p class="text-muted-foreground leading-relaxed text-base md:text-lg">
+                <p class="text-slate-300 leading-relaxed text-base md:text-lg font-medium">
                   {goal.description}
                 </p>
               </div>
