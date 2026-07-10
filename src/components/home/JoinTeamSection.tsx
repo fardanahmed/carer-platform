@@ -18,7 +18,7 @@ const JoinTeamSection = () => {
   };
 
   return (
-    <section className="py-24 bg-slate-950 border-t border-white/5 relative overflow-hidden">
+    <section className="py-24 bg-slate-950/80 backdrop-blur-sm border-t border-white/5 relative overflow-hidden">
       {/* Glow background bubbles */}
       <div className="absolute -right-48 top-1/3 h-[500px] w-[500px] rounded-full bg-cyan-500/10 blur-[150px] pointer-events-none" />
       <div className="absolute left-1/4 -bottom-48 h-[600px] w-[600px] rounded-full bg-blue-600/10 blur-[150px] pointer-events-none" />

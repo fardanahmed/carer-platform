@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Float, Sphere, Icosahedron, Torus, Environment } from '@react-three/drei';
 import * as THREE from 'three';
@@ -73,17 +73,24 @@ const InteractiveScene = () => {
   const { viewport } = useThree();
   const groupRef = useRef<THREE.Group>(null);
   const shapes = useMemo(() => generateShapes(15), []);
+  const target = useRef({ x: 0, y: 0 });
 
-  useFrame((state) => {
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const nx = (e.clientX / window.innerWidth) * 2 - 1;
+      const ny = -(e.clientY / window.innerHeight) * 2 + 1;
+      target.current.x = (ny * viewport.height) / 20;
+      target.current.y = (nx * viewport.width) / 20;
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [viewport]);
+
+  useFrame(() => {
     if (!groupRef.current) return;
-    // Calculate target rotation based on mouse pointer
-    // state.pointer holds normalized mouse coordinates [-1, 1]
-    const targetX = (state.pointer.y * viewport.height) / 20;
-    const targetY = (state.pointer.x * viewport.width) / 20;
-
     // Gently interpolate current rotation towards target
-    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetX, 0.05);
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetY, 0.05);
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, target.current.x, 0.05);
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, target.current.y, 0.05);
   });
 
   return (
@@ -97,8 +104,8 @@ const InteractiveScene = () => {
 
 export default function Interactive3DBackground() {
   return (
-    <div className="absolute inset-0 z-0 h-full w-full pointer-events-auto">
-      <Canvas camera={{ position: [0, 0, 10], fov: 45 }} dpr={[1, 2]}>
+    <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none">
+      <Canvas camera={{ position: [0, 0, 10], fov: 45 }} dpr={[1, 2]} style={{ pointerEvents: 'none' }}>
         {/* Abstract environment map for sleek reflections */}
         <Environment preset="city" />
         
