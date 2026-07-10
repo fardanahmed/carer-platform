@@ -29,7 +29,7 @@ const bgUrl = getImageUrl(images.heroBackground);
 
 <section class="relative w-full bg-background overflow-hidden">
   <!-- Dynamic, modern background layer -->
-  <div class="relative h-[90vh] min-h-[600px] w-full overflow-hidden bg-slate-950 dark:bg-slate-950">
+  <div class="relative flex min-h-[90vh] sm:min-h-[600px] w-full overflow-hidden bg-slate-950 dark:bg-slate-950">
     <div class="absolute inset-0 z-0">
       <ParticlesBackground client:load />
       <img
@@ -49,8 +49,8 @@ const bgUrl = getImageUrl(images.heroBackground);
     </div>
 
     <!-- Content Container -->
-    <div class="container relative z-20 mx-auto flex h-full max-w-7xl flex-col justify-center lg:items-end px-6">
-      <div class="max-w-2xl pt-12 md:pt-20 p-8 md:p-12 rounded-3xl bg-slate-900/40 backdrop-blur-2xl border border-white/10 shadow-[0_0_40px_rgba(0,240,255,0.15)] relative overflow-hidden">
+    <div class="container relative z-20 mx-auto flex w-full max-w-7xl flex-col justify-center lg:items-end px-6 py-20">
+      <div class="max-w-2xl shrink-0 pt-12 md:pt-20 p-8 md:p-12 rounded-3xl bg-slate-900/40 backdrop-blur-2xl border border-white/10 shadow-[0_0_40px_rgba(0,240,255,0.15)] relative overflow-hidden">
         <!-- Subtle inner glow for glass effect -->
         <div class="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 to-transparent z-0"></div>
         
