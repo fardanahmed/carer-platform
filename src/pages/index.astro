@@ -128,7 +128,7 @@ const schema = (siteData && siteData.contact) ? {
   </style>
 
   <script is:inline>
-    if (sessionStorage.getItem('3d-scene-loaded') === 'true') {
+    if (window.is3dSceneLoaded === true) {
       // Bypass the loading screen entirely for repeat visits
       const loader = document.getElementById('global-loader');
       if (loader) {
