@@ -4,7 +4,7 @@ import Hero from '../components/home/Hero.astro';
 import ResearchGrid from '../components/home/ResearchGrid';
 import GoalsSection from '../components/home/GoalsSection.astro';
 import JoinTeamSection from '../components/home/JoinTeamSection';
-import Interactive3DBackground from '../components/home/Interactive3DBackground';
+
 
 import { getResearchAreas, getSiteSettings } from '../lib/content-api';
 import type { SiteData } from '../types';
@@ -33,11 +33,7 @@ const schema = (siteData && siteData.contact) ? {
   }
 } : undefined;
 ---
-
 <Layout schema={schema}>
-  <!-- Global 3D Background -->
-  <Interactive3DBackground client:load />
-
   <!-- Static Hero Component (zero client JS) -->
   <Hero />
   

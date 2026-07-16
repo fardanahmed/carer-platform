@@ -2,6 +2,7 @@
 import { ClientRouter } from 'astro:transitions';
 import Navbar from '../components/shared/Navbar';
 import Footer from '../components/shared/Footer';
+import Interactive3DBackground from '../components/home/Interactive3DBackground';
 import '../styles/globals.css';
 import { getSiteSettings } from '../lib/content-api';
 import type { SiteData } from '../types';
@@ -76,6 +77,7 @@ const displayDesc = description || defaultDesc;
     {schema && <script type="application/ld+json" is:inline set:html={JSON.stringify(schema).replace(/</g, '\\u003c').replace(/>/g, '\\u003e')} />}
   </head>
   <body class="bg-background text-foreground font-sans antialiased selection:bg-primary/20 selection:text-primary">
+    <Interactive3DBackground client:load transition:persist />
     <div class="flex min-h-screen flex-col">
       <!-- client:load is needed for mobile collapsible navigation and theme-switching interactions -->
       <header>
